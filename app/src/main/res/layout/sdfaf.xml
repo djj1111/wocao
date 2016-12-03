@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ShaderImageView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/ttt"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/backgroundjpg"
+        ShaderImageView:siBorderColor="#ff0000ff"
+        ShaderImageView:siBorderWidth="10dp" />
+
+    <com.github.siyamed.shapeimageview.BubbleImageView
+        android:id="@+id/ttt1"
+        android:layout_width="2000dp"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ttt"
+        android:layout_marginTop="13dp"
+        android:src="@mipmap/backgroundjpg"
+        ShaderImageView:siArrowPosition="right"
+        ShaderImageView:siBorderColor="#55ff0000"
+        ShaderImageView:siBorderWidth="20dp"
+        ShaderImageView:siSquare="false"
+        ShaderImageView:siTriangleHeight="30dp" />
+
+    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+        android:id="@+id/ttt2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:src="@mipmap/backgroundjpg"
+        ShaderImageView:siShape="@drawable/rectangle" />
+
+    <com.github.siyamed.shapeimageview.RoundedImageView
+        android:id="@+id/ttt4"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignLeft="@+id/ttt2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/ttt2"
+        android:scaleType="center"
+        android:src="@mipmap/backgroundjpg"
+        ShaderImageView:siBorderColor="#ff0000ff"
+        ShaderImageView:siBorderWidth="10dp"
+        ShaderImageView:siRadius="6dp" />
+
+
+</RelativeLayout>
