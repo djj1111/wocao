@@ -84,27 +84,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
 
-        if (tablelist.isEmpty()) return true;
+        if (tablelist.isEmpty()) return super.dispatchTouchEvent(event);
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             //当手指按下的时候
             x1 = event.getX();
         }
         if (event.getAction() == MotionEvent.ACTION_UP) {
             x2 = event.getX();
-            if (x2 < x1 && curPointer < tablelist.size() - 1) {
+            if (x1-x2>30 && curPointer < tablelist.size() - 1) {
                 curPointer += 1;
                 tv1.setText(tablelist.get(curPointer).getName());
                 tv2.setText(tablelist.get(curPointer).getAddress());
                 tv3.setText(tablelist.get(curPointer).getPhone());
-            } else if (x2 > x1 && curPointer > 0) {
+            } else if (x2-x1 > 30 && curPointer > 0) {
                 curPointer -= 1;
                 tv1.setText(tablelist.get(curPointer).getName());
                 tv2.setText(tablelist.get(curPointer).getAddress());
                 tv3.setText(tablelist.get(curPointer).getPhone());
             }
         }
-        super.dispatchTouchEvent(event);
-        return true;
+        return super.dispatchTouchEvent(event);
+
     }
 
     @Override
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         db = x.getDb(daoConfig);
         try {
             tablelist = (ArrayList<TestTable>) db.findAll(TestTable.class);
+            if (tablelist==null) tablelist=new ArrayList<>();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -147,3 +148,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
+
+
