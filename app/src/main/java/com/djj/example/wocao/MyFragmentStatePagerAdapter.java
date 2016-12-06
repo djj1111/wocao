@@ -3,6 +3,7 @@ package com.djj.example.wocao;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -30,12 +31,12 @@ public class MyFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
         mFragments.remove(fragment);
     }
 
-    public void setFragments(List<Fragment> fragments) {
-        mFragments = fragments;
-    }
-
     public List<Fragment> getFragments() {
         return mFragments;
+    }
+
+    public void setFragments(List<Fragment> fragments) {
+        mFragments = fragments;
     }
 
     public void clear() {
@@ -45,6 +46,12 @@ public class MyFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
             }
         }
         mFragments.clear();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        //return super.getItemPosition(object);
+        return PagerAdapter.POSITION_NONE;
     }
 
     @Override

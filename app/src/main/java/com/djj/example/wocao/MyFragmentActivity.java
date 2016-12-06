@@ -34,14 +34,16 @@ public class MyFragmentActivity extends FragmentActivity {
         tablelist.add(table);
         MyFragment fragment=MyFragment.getInstances(table);
         mFragmentStatePagerAdapter.addFragment(fragment);
-        int position=mFragmentStatePagerAdapter.getItemPosition(fragment);
-        mViewPager.setCurrentItem(position);
+        mFragmentStatePagerAdapter.notifyDataSetChanged();
+        /*int position=mFragmentStatePagerAdapter.getItemPosition(fragment);
+        mViewPager.setCurrentItem(position);*/
     }
     private void initshow(){
         if (tablelist.isEmpty()) {add();}
         else{
             for (TestTable t : tablelist){
                 mFragmentStatePagerAdapter.addFragment(MyFragment.getInstances(t));
+                mFragmentStatePagerAdapter.notifyDataSetChanged();
             }
         }
 
@@ -56,6 +58,8 @@ public class MyFragmentActivity extends FragmentActivity {
                 e.printStackTrace();
             }
         }
+        mFragmentStatePagerAdapter.removeFragment(fragment);
+        mFragmentStatePagerAdapter.notifyDataSetChanged();
     }
 
     @Event(value = R.id.button_add, type = View.OnClickListener.class)
@@ -97,9 +101,9 @@ public class MyFragmentActivity extends FragmentActivity {
             tablelist.add(t);
         }*/
         //Log.d("fuck","asdfasdfasdfasfdasfafdaassss");
-
-        initshow();
         mViewPager.setAdapter(mFragmentStatePagerAdapter);
+        initshow();
+
     }
 
     private void db_init(){

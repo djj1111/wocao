@@ -34,12 +34,12 @@ public class MyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        // Log.d(TAG, "onCreateView  mData = " + mData);
        // String str = "";
-        if (savedInstanceState != null) {
+        /*if (savedInstanceState != null) {
             mTestTable.setId(savedInstanceState.getInt("id"));
             mTestTable.setName(savedInstanceState.getString("name"));
             mTestTable.setAddress(savedInstanceState.getString("address"));
             mTestTable.setPhone(savedInstanceState.getString("phone"));
-        }
+        }*/
 
         // 这里必须是null
         View item = inflater.inflate(R.layout.fragment_item, null);
