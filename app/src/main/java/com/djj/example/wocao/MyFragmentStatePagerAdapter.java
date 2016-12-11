@@ -2,8 +2,6 @@ package com.djj.example.wocao;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -14,59 +12,103 @@ import java.util.List;
  * Created by djj on 2016/12/4.
  */
 
-public class MyFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
-    public static final String TAG = MyFragmentStatePagerAdapter.class.getSimpleName();
-
-    private List<Fragment> mFragments = new ArrayList<>();
+public class MyFragmentStatePagerAdapter extends FragmnetAutoPagerAdapter {
+    public static final String TAG = FragmnetAutoPagerAdapter.class.getSimpleName();
+    private static int addcount = 0, delcount = 0, newcount = 0;
+    //private ArrayList<MyFragment> rmFragments=new ArrayList<>();
+    public MyFragment currentFragment;
+    private ArrayList<MyFragment> tmFragments = new ArrayList<MyFragment>();
 
     public MyFragmentStatePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void addFragment(Fragment fragment) {
-        mFragments.add(fragment);
+    public void addFragment(MyFragment fragment) {
+        tmFragments.add(fragment);
     }
 
-    public void removeFragment(Fragment fragment) {
-        mFragments.remove(fragment);
+    public void removeFragment(MyFragment fragment) {
+        tmFragments.remove(fragment);
+        //rmFragments.add(fragment);
     }
 
-    public List<Fragment> getFragments() {
-        return mFragments;
+    public int getFramentposition(MyFragment fragment) {
+        return tmFragments.indexOf(fragment);
     }
 
-    public void setFragments(List<Fragment> fragments) {
-        mFragments = fragments;
+    public List<MyFragment> getFragments() {
+        return tmFragments;
+    }
+
+    public void setFragments(ArrayList<MyFragment> fragments) {
+        tmFragments = fragments;
     }
 
     public void clear() {
-        for (Fragment fragment : mFragments) {
+        for (MyFragment fragment : tmFragments) {
             if (fragment != null && fragment.isAdded()) {
                 fragment.onDestroy();
             }
         }
-        mFragments.clear();
+        tmFragments.clear();
     }
 
     @Override
     public int getItemPosition(Object object) {
         //return super.getItemPosition(object);
-        return PagerAdapter.POSITION_NONE;
+       /* if (object instanceof MyFragment){
+            return tmFragments.indexOf(object)>=0?tmFragments.indexOf(object):PagerAdapter.POSITION_NONE;
+        }
+        else{
+            return PagerAdapter.POSITION_UNCHANGED;
+        }*/
+        /*int index=tmFragments.indexOf(object);
+        if (index<0) return POSITION_NONE;*///POSITION_UNCHANGED;
+        return POSITION_NONE;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Log.d(TAG, "instantiateItem position = " + position);
+        /*addcount++;*/
+        Log.d("instantiateitem", "position=" + position);
+
+
         return super.instantiateItem(container, position);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return mFragments.get(position);
+        return tmFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return mFragments.size();
+        return tmFragments.size();
     }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        /*delcount++;
+        Log.d("destroyitem","delcount="+delcount+"position="+position);*/
+        //if (tmFragments.indexOf(object)==-1) ((MyFragment)object).clear();
+        /*if (position<){
+            for (;position<tmFragments.size();position++){
+
+            }
+        }*/
+        Log.d("destroyitem", "position=" + position);
+        super.destroyItem(container, position, object);
+        /*if (tmFragments.indexOf(object)==-1) {
+            Log.d("removeitem","position="+position);
+            super.removeItem(position);
+           }*/
+    }
+
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        currentFragment = (MyFragment) object;
+        Log.d("fuckkkkk", "current=" + tmFragments.indexOf(object));
+        super.setPrimaryItem(container, position, object);
+    }
+
 }

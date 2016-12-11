@@ -17,16 +17,21 @@ import android.widget.EditText;
 public class MyFragment extends Fragment {
 
     public final static String TAG = "MyFragment";
-    public final static String SaveInstanceStateEXTRA = "SaveInstanceStateEXTRA";
 
-    //String mData;
     private TestTable mTestTable;
+    private View item;
+    private EditText textid, texttext, textip, texttime;
 
-    public static MyFragment getInstances(TestTable t) {
+    public static MyFragment getInstances() {
         MyFragment myFragment = new MyFragment();
-        //myFragment.mData = data;
-        myFragment.mTestTable=t;
         return myFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle b = this.getArguments();
+        mTestTable = b.getParcelable("setTestTable");
     }
 
     @Nullable
@@ -35,6 +40,7 @@ public class MyFragment extends Fragment {
        // Log.d(TAG, "onCreateView  mData = " + mData);
        // String str = "";
         /*if (savedInstanceState != null) {
+            mTestTable=new TestTable();
             mTestTable.setId(savedInstanceState.getInt("id"));
             mTestTable.setName(savedInstanceState.getString("name"));
             mTestTable.setAddress(savedInstanceState.getString("address"));
@@ -42,11 +48,13 @@ public class MyFragment extends Fragment {
         }*/
 
         // 这里必须是null
-        View item = inflater.inflate(R.layout.fragment_item, null);
-        EditText textid = (EditText) item.findViewById(R.id.tvid);
-        EditText texttext = (EditText) item.findViewById(R.id.tvtext);
-        EditText textip = (EditText) item.findViewById(R.id.tvip);
-        EditText texttime = (EditText) item.findViewById(R.id.tvtime);
+        //Log.d("Myfragment","count="+count);
+        //Toast.makeText(getActivity(),"serials="+mTestTable.getSerialsnum(), Toast.LENGTH_SHORT).show();
+        item = inflater.inflate(R.layout.fragment_item, container, false);
+        textid = (EditText) item.findViewById(R.id.tvid);
+        texttext = (EditText) item.findViewById(R.id.tvtext);
+        textip = (EditText) item.findViewById(R.id.tvip);
+        texttime = (EditText) item.findViewById(R.id.tvtime);
         textid.setEnabled(false);
         texttext.addTextChangedListener(new TextWatcher() {
 
@@ -55,6 +63,7 @@ public class MyFragment extends Fragment {
                                       int count) {
 //
                 mTestTable.setName(s.toString());
+
             }
 
             @Override
@@ -91,7 +100,7 @@ public class MyFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-//
+
                 mTestTable.setPhone(s.toString());
             }
 
@@ -119,21 +128,56 @@ public class MyFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //outState.putString(SaveInstanceStateEXTRA, mData + "_save");
-        outState.putInt("id",mTestTable.getId());
+        /*outState.putInt("id",mTestTable.getId());
         outState.putString("name",mTestTable.getName());
         outState.putString("address",mTestTable.getAddress());
-        outState.putString("phone",mTestTable.getPhone());
+        outState.putString("phone",mTestTable.getPhone());*/
        // Log.d(TAG, "onSaveInstanceState  mData = " + mData);
     }
 
     @Override
+    public void onDestroyView() {
+        //((ViewGroup)item.getParent()).removeView(item);
+        /*textid.setEnabled(false);
+        textip.setEnabled(false);
+        texttext.setEnabled(false);
+        texttime.setEnabled(false);
+        item.setEnabled(false);*/
+        super.onDestroyView();
+    }
+
+    public void clear() {
+        textid.setText("");
+        textip.setText("");
+        texttime.setText("");
+        texttext.setText("");
+        //mTestTable=null;
+        //item=null;
+    }
+
+    public View getrootview() {
+        return item;
+    }
+
+    @Override
     public void onDestroy() {
+        /*Bundle b=this.getArguments();
+        b.remove("setTestTable");
+        b.putParcelable("setTestTable",mTestTable);
+        this.setArguments(b);*/
+       /* */
+        //mTestTable=null;
         super.onDestroy();
        // Log.d(TAG, "onDestroy mData = " + mData);
     }
 
-    public TestTable getmTestTable(){
-        return mTestTable;
+    public Bundle getmTestTable() {
+        Bundle b = new Bundle();
+        b.putParcelable("getTestTable", mTestTable);
+        return b;
     }
+    /*public void setmTestTable(TestTable testTable){
+        mTestTable=testTable;
+    }*/
 
 }
