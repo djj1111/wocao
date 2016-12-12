@@ -1,6 +1,7 @@
 package com.djj.example.wocao;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
@@ -56,18 +57,18 @@ public class MyFragmentActivity extends FragmentActivity {
             Toast.makeText(MyFragmentActivity.this, "没有内容，不能再删除了！", Toast.LENGTH_SHORT).show();
             return;
         }
-        MyFragment fragment = mFragmentStatePagerAdapter.currentFragment;
+        MyFragment fragment = (MyFragment) mFragmentStatePagerAdapter.getCurrentFragment();
         TestTable table = fragment.getmTestTable().getParcelable("getTestTable");
         table.setIsdelete(true);
         for (TestTable t : tablelist) {
             if (t.getSerialsnum() == table.getSerialsnum()) t = table;
         }
         int position = mFragmentStatePagerAdapter.getFramentposition(fragment);
-        if (position < count - 1) {
+        /*if (position < count - 1) {
             position += 1;
         } else if (position > 0) {
             position -= 1;
-        }
+        }*/
         //mViewPager.setCurrentItem(position);
         mFragmentStatePagerAdapter.removeFragment(fragment);
         mFragmentStatePagerAdapter.notifyDataSetChanged();
@@ -82,9 +83,9 @@ public class MyFragmentActivity extends FragmentActivity {
             }
         }*/
         try {
-            List<MyFragment> listMyFragment = mFragmentStatePagerAdapter.getFragments();
-            for (MyFragment f : listMyFragment) {
-                TestTable f_t = f.getmTestTable().getParcelable("getTestTable");
+            List<Fragment> listFragment = mFragmentStatePagerAdapter.getFragments();
+            for (Fragment f : listFragment) {
+                TestTable f_t = ((MyFragment) f).getmTestTable().getParcelable("getTestTable");
                 for (TestTable t : tablelist) {
                     if (t.getSerialsnum() == f_t.getSerialsnum()) {
                         t = f_t;
@@ -155,11 +156,8 @@ public class MyFragmentActivity extends FragmentActivity {
         x.view().inject(this);
         mViewPager = (JazzyViewPager) findViewById(R.id.viewpager);
         mViewPager.setTransitionEffect(JazzyViewPager.TransitionEffect.Tablet);
-
-
         db_init();
         mFragmentStatePagerAdapter = new MyFragmentStatePagerAdapter(getSupportFragmentManager(), mViewPager);
-
         mViewPager.setAdapter(mFragmentStatePagerAdapter);
         mViewPager.setPageMargin(30);
         init();

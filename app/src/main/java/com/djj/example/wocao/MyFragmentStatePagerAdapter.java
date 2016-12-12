@@ -17,9 +17,9 @@ import java.util.List;
 public class MyFragmentStatePagerAdapter extends DjjFragmentStatePagerAdapter {
     public static final String TAG = DjjFragmentStatePagerAdapter.class.getSimpleName();
     private static int addcount = 0, delcount = 0, newcount = 0;
-    //private ArrayList<MyFragment> rmFragments=new ArrayList<>();
-    public MyFragment currentFragment;
-    private ArrayList<MyFragment> mFragments = new ArrayList<MyFragment>();
+    //private ArrayList<Fragment> rmFragments=new ArrayList<>();
+    private Fragment currentFragment;
+    private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
     private JazzyViewPager mJazzy;
 
     public MyFragmentStatePagerAdapter(FragmentManager fm, JazzyViewPager v) {
@@ -27,30 +27,30 @@ public class MyFragmentStatePagerAdapter extends DjjFragmentStatePagerAdapter {
         mJazzy = v;
     }
 
-    public void addFragment(MyFragment fragment) {
+    public void addFragment(Fragment fragment) {
         mFragments.add(fragment);
     }
 
-    public void removeFragment(MyFragment fragment) {
+    public void removeFragment(Fragment fragment) {
         super.setRemovePosition(mFragments.indexOf(fragment));
         mFragments.remove(fragment);
         //rmFragments.add(fragment);
     }
 
-    public int getFramentposition(MyFragment fragment) {
+    public int getFramentposition(Fragment fragment) {
         return mFragments.indexOf(fragment);
     }
 
-    public List<MyFragment> getFragments() {
+    public List<Fragment> getFragments() {
         return mFragments;
     }
 
-    public void setFragments(ArrayList<MyFragment> fragments) {
+    public void setFragments(ArrayList<Fragment> fragments) {
         mFragments = fragments;
     }
 
     public void clear() {
-        for (MyFragment fragment : mFragments) {
+        for (Fragment fragment : mFragments) {
             if (fragment != null && fragment.isAdded()) {
                 fragment.onDestroy();
             }
@@ -58,10 +58,14 @@ public class MyFragmentStatePagerAdapter extends DjjFragmentStatePagerAdapter {
         mFragments.clear();
     }
 
+    public Fragment getCurrentFragment() {
+        return currentFragment;
+    }
+
     @Override
     public int getItemPosition(Object object) {
         //return super.getItemPosition(object);
-       /* if (object instanceof MyFragment){
+       /* if (object instanceof Fragment){
             return mFragments.indexOf(object)>=0?mFragments.indexOf(object):PagerAdapter.POSITION_NONE;
         }
         else{
@@ -96,7 +100,7 @@ public class MyFragmentStatePagerAdapter extends DjjFragmentStatePagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         /*delcount++;
         Log.d("destroyitem","delcount="+delcount+"position="+position);*/
-        //if (mFragments.indexOf(object)==-1) ((MyFragment)object).clear();
+        //if (mFragments.indexOf(object)==-1) ((Fragment)object).clear();
         /*if (position<){
             for (;position<mFragments.size();position++){
 
@@ -112,7 +116,7 @@ public class MyFragmentStatePagerAdapter extends DjjFragmentStatePagerAdapter {
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        currentFragment = (MyFragment) object;
+        currentFragment = (Fragment) object;
         Log.d("fuckkkkk", "current=" + mFragments.indexOf(object));
         super.setPrimaryItem(container, position, object);
     }
