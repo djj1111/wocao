@@ -3,9 +3,10 @@ package com.djj.example.wocao;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Toast;
+
+import com.djj.jazzyviewpager.JazzyViewPager;
 
 import org.xutils.DbManager;
 import org.xutils.ex.DbException;
@@ -26,7 +27,7 @@ public class MyFragmentActivity extends FragmentActivity {
     private DbManager db;
     private MyFragmentStatePagerAdapter mFragmentStatePagerAdapter;
     private FragmentStatePagerAdapter ff;
-    private ViewPager mViewPager;
+    private JazzyViewPager mViewPager;
     private int addcount = 0, delcount = 0;
 
     private void add() {
@@ -128,17 +129,23 @@ public class MyFragmentActivity extends FragmentActivity {
 
     @Event(value = R.id.button_add, type = View.OnClickListener.class)
     private void bt1Click(View v) {
+        v.setEnabled(false);
         add();
+        v.setEnabled(true);
     }
 
     @Event(value = R.id.button_delete, type = View.OnClickListener.class)
     private void bt2Click(View v) {
+        v.setEnabled(false);
         delete();
+        v.setEnabled(true);
     }
 
     @Event(value = R.id.button_save, type = View.OnClickListener.class)
     private void bt3Click(View v) {
+        v.setEnabled(false);
         update();
+        v.setEnabled(true);
     }
 
     @Override
@@ -146,20 +153,31 @@ public class MyFragmentActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
         x.view().inject(this);
-        mFragmentStatePagerAdapter = new MyFragmentStatePagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager = (JazzyViewPager) findViewById(R.id.viewpager);
+        mViewPager.setTransitionEffect(JazzyViewPager.TransitionEffect.Tablet);
+
+
         db_init();
+        mFragmentStatePagerAdapter = new MyFragmentStatePagerAdapter(getSupportFragmentManager(), mViewPager);
+
         mViewPager.setAdapter(mFragmentStatePagerAdapter);
+        mViewPager.setPageMargin(30);
         init();
-        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        /*mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                /*View view = mViewPager.getFocusedChild();
+                *//*View view = mViewPager.getFocusedChild();
                 MyFragment fragment = (MyFragment) mFragmentStatePagerAdapter.getCurrentFragmentbyrootview(view);
                 int position1 = mFragmentStatePagerAdapter.getFramentposition(fragment);
-                Toast.makeText(MyFragmentActivity.this, "onPageSelected选中了" + position1, Toast.LENGTH_SHORT).show();*/
+                Toast.makeText(MyFragmentActivity.this, "onPageSelected选中了" + position1, Toast.LENGTH_SHORT).show();*//*
             }
-        });
+        });*/
+        /*mViewPager.setPageTransformer(true,new ViewPager.PageTransformer(){
+            @Override
+            public void transformPage(View page, float position) {
+
+            }
+        });*/
 
     }
 
