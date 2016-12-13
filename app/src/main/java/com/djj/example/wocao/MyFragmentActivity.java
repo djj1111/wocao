@@ -26,7 +26,7 @@ public class MyFragmentActivity extends FragmentActivity {
 
     private ArrayList<TestTable> tablelist;
     private DbManager db;
-    private MyFragmentStatePagerAdapter mFragmentStatePagerAdapter;
+    private MyExtendFragmentStatePagerAdapter mFragmentStatePagerAdapter;
     private FragmentStatePagerAdapter ff;
     private JazzyViewPager mViewPager;
     private int addcount = 0, delcount = 0;
@@ -63,7 +63,7 @@ public class MyFragmentActivity extends FragmentActivity {
         for (TestTable t : tablelist) {
             if (t.getSerialsnum() == table.getSerialsnum()) t = table;
         }
-        int position = mFragmentStatePagerAdapter.getFramentposition(fragment);
+        int position = mFragmentStatePagerAdapter.getFramentPosition(fragment);
         /*if (position < count - 1) {
             position += 1;
         } else if (position > 0) {
@@ -157,7 +157,7 @@ public class MyFragmentActivity extends FragmentActivity {
         mViewPager = (JazzyViewPager) findViewById(R.id.viewpager);
         mViewPager.setTransitionEffect(JazzyViewPager.TransitionEffect.Tablet);
         db_init();
-        mFragmentStatePagerAdapter = new MyFragmentStatePagerAdapter(getSupportFragmentManager(), mViewPager);
+        mFragmentStatePagerAdapter = new MyExtendFragmentStatePagerAdapter(getSupportFragmentManager(), mViewPager);
         mViewPager.setAdapter(mFragmentStatePagerAdapter);
         mViewPager.setPageMargin(30);
         init();

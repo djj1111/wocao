@@ -37,7 +37,7 @@ public class MyFragmentStatePagerAdapter extends DjjFragmentStatePagerAdapter {
         //rmFragments.add(fragment);
     }
 
-    public int getFramentposition(Fragment fragment) {
+    public int getFragmentposition(Fragment fragment) {
         return mFragments.indexOf(fragment);
     }
 
